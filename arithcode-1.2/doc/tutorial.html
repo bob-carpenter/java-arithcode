@@ -1,0 +1,208 @@
+<HTML>
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>Arithmetic Coding and Compression Tutorial</title>
+<meta http-equiv="Content-type"
+      content="application/xhtml+xml; charset=iso-8859-1"/>
+<meta http-equiv="Content-Language"
+      content="en"/>
+<style>
+* { font-family: arial; }
+body {  width: 45em; padding: 0 1em 1em 1em; font-size: 90% }
+code { font-family: courier }
+h1 {  font-size: 140%; font-style: bold }
+h2 {  font-size: 115%; margin: 18px 0 6px 0 }
+h3 {  font-size: 100%; margin: 12px 0 6px 0; padding: 0 }
+h4 { margin: 12px 0 6px 0; padding 0 }
+p {  margin: 6px 0 0 0; padding 0 0 6px 0 }
+</style>
+</head>
+<body>
+
+<h1>Arithmetic Coding and Model-Based Compression Tutorial</h1>
+
+<p>
+Arithmetic coding is a general technique for coding the outcome of a
+stochastic process based on an adaptive model.  The expected bit rate
+is the cross-entropy rate of the model versus the actual process.
+PPM, prediction by partial matching, is an adaptive statistical model
+of a symbol sequence which models the likelihood of the next byte based
+on a (relatively short) suffix of the sequence of previous bytes.
+
+
+<h2>Byte Stream Models</h2>
+
+<p>
+Although arithmetic coding works with any sample space, taking the
+outcomes to be bytes allows the coding of text in arbitrary character
+sets as well as binary files.  Encoding proceeds a byte at a time and
+provides output a bit at a time; decoding proceeds a bit at a time and
+provides output a byte at a time. The end-of-file outcome is coded as
+a separate outcome, mirroring the behavior of byte reading in both
+Java and C streams. </p>
+
+<p>
+Suppose <code>b[0],...,b[m-1]</code> is a sequence of bytes of length
+<code>m</code> where <code>b[m-1]=EOF</code>. A suitable model
+provides an estimate <code>P(b[n]|b[0],...,b[n-1])</code> for the
+probability of the <code>n</code>th byte in the stream or end-of-file
+given its observation of the previous <code>n-1</code> bytes.  The
+number of bits required to encode <code>b[n]</code> is approximately
+<code>-log_2 P_n(b[n]|b[0],...b[n-1])</code>. A slight penalty is
+incurred based on the precision of the underlying arithmetic.</p>
+
+
+<h2>Encoding with Cumulative Probabilities</h2>
+
+<p>
+In a sequence of bytes <code>b[0], b[1], ..., b[m-1]</code>, the byte
+<code>b[n]</code> is coded based on an ordering <code>b_0, ...,
+b_256</code> of the all 256 bytes and the end-of-file symbol.
+Assuming <code>b[n]=b_k</code> for some <code>k</code>, the arithmetic
+encoder stores the sub-interval</p>
+
+<blockquote>
+  <code>[ SUM_j &lt; k P(b[j]|b[0],...,b[j-1]),</code>
+  <br />
+  <code>&nbsp;  SUM_j &lt;= k P(b[j]|b[0],...,b[j-1]) ]</code>
+</blockquote>
+
+<p>of <code>[0.0,1.0]</code>.  Independently of the indexing, the width
+of the interval is <code>P(b[n]|b[0],...,b[n-1])</code>.  In practice,
+the interval is approximated using three integers <code>low</code>,
+<code>high</code>, and <code>total</code>, which define the interval
+<code>[low/total,high/total]</code>.  The difference
+<code>high-low</code> must be non-zero for every outcome with non-zero
+probability. A slight loss in coding precision arises from this
+integer approximation and is bounded by the precision induced by
+<code>total</code>.</p>
+
+
+<h2>Decoding with Cumulative Probabilities</h2>
+
+<p>
+For decoding, the <code>total</code> used to encode the next symbol's
+interval is provided by the model. This requires each possible outcome
+<code>P(.|b[0],...,b[n-1])</code> to be coded with
+the same <code>total</code> value.  Given the total, the decoder returns a
+count <code>k</code> such that <code>low&lt;=k&lt;high</code>. The model
+then determines the symbol from the count <code>k</code>.  The coder
+encodes byte <code>b[n]</code> based on the previous symbols
+<code>b[0],...,b[n-1]</code>, enabling it to update its model after
+every symbol. The decoder is able to reconstruct the same model after
+decoding each symbol.  The only restriction on the models are that
+they are trained only on the previous <code>n-1</code> symbols; in
+particular, they cannot use information about the symbol being coded.
+</p>
+
+
+<h2>Models</h2>
+
+<p>
+The arithmetic coder is distributed with several illustrative models,
+culminating in PPMC, prediction by partial matching with model C.
+When introduced in the 1980s, PPM provided the best known compression
+on general text and binary data such as images. It has since been
+beaten by embellishments, first PPMC a few years later which had
+better fallback strategies for unseen contexts, then PPM* a decade
+after that, which kept track of unbounded length contexts, and then
+more recently, PPMZ, which provides several improvements to both
+estimation and implementation.
+</p>
+
+<h3>Uniform Model</h3>
+
+<p>
+Uniform distributions assign the same probability to every outcome.
+The uniform distribution codes a byte <code>b</code> as the interval
+<code>[low,high,total] = [b,b+1,257]</code> and end-of-file as
+<code>[256,257,257]</code>.  The expected entropy rate is <code>-log_2
+1/257</code>, just over 8 bits.  The loss is due to encoding
+end-of-file. For a regular file, the file system keeps track of its
+length so that all 256 bytes may be included.  Read and write in
+languages like C and Java return bytes in the range 0-255 and return
+-1 if the end-of-file is reached; essentially 257 outcomes.  An
+alternative implementation of arithmetic coding would store the length
+<code>n</code> separately in <code>log_2 n</code> bits. Although this
+is typically more efficient than coding end-of-file in a model, it
+disrupts the streaming nature of coding/decoding.  
+</p>
+
+<h3>Adaptive Unigram Model</h3>
+<p>
+The adaptive unigram model keeps a count of previously seen bytes and
+estimates the likelihood of a byte <code>b</code> based on its
+frequency <code>count(b)</code>, where each byte's count is
+initialized to <code>1</code>.  Adding <code>1</code> to unseen events
+in this way is known as Laplace smoothing.  Whenever the total count
+exceeds the maximum, the counts are rescaled by dividing by
+<code>2</code> and rounding up to at least <code>1</code>.  The model
+is adaptive in that it updates after each byte; it is a unigram
+because strings of length 1 are used.  A binary search is used during
+decoding to determine the interval, but the totals are updated by a
+linear traversal of all bytes before the updated byte in the order.
+</p>
+
+
+<h3>PPM: Prediction by Partial Matching</h3>
+
+<p>
+The PPM model (Cleary and Witten 1984) predicts the next byte based on
+a sequence of previous bytes.  It generalizes the byte frequency model
+by keeping counts for sequences of bytes b_1,..,b_n for some value of
+n (to be precise, we write PPM(n) for the <code>n</code>th order PPM
+model).</p>
+
+<p>
+The PPM model illustrates the final aspect of the arithmetic coding
+model -- escapes.  A model has the option of informing the coder that
+it doesn't currently know how to code the symbol and providing the
+likelihood interval for this "escape" outcome.  Then, the coder asks
+again.  With PPM, after each escape, the context is narrowed to a
+shorter prefix of the current byte, eventually grounding out in the
+uniform distribution.  At each escaped context in the backoff, outcomes
+that have been seen in longer contexts are excluded from the counts.
+</p>
+
+<p>
+The PPM model is configurable by constructor for maximum context
+length, and rescaling and maximum count parameters can be tuned
+through constants in the code.</p>
+
+<h3>I/O: BitInput and BitOutput</h3>
+
+<p>
+Arithmetic coding relies on processing files a single bit at a
+time. The classes <code>BitInput</code> and <code>BitOutput</code>
+wrap ordinary input and output streams to provide buffered access to
+individual bits.</p>
+
+<h3>Sets of Bytes</h3>
+<p>
+In order to implement PPM with tight compression, it is necessary to
+keep track of which symbols have been seen in escaped contexts so that
+their counts may be subtracted from the narrower contexts. The
+representation of the bytes that have been seen is handled with a
+compact, generic implementation of byte sets.  The members are stored
+in the bits four long values and accesses through shifting and
+masking. (This was found to be faster and smaller than a binary
+array.)</p>
+
+
+<h2>References</h2>
+
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Prediction_by_partial_matching">Wikipedia: PPM</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Arithmetic_coding">Wikipedia: Arithmetic Coding</a></li>
+</ul>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>Tests of Arithmetic Coding and PPM</title>
+<meta http-equiv="Content-type"
+      content="application/xhtml+xml; charset=iso-8859-1"/>
+<meta http-equiv="Content-Language"
+      content="en"/>
+<style>
+p, h1, h2, h3, h4 { font-family: arial; }
+body {  width: 45em; padding: 0 1em 1em 1em; font-size: 90% }
+code { font-family: courier }
+h1 {  font-size: 140%; font-style: bold }
+h2 {  font-size: 115%; margin: 18px 0 6px 0 }
+h3 {  font-size: 100%; margin: 12px 0 6px 0; padding: 0 }
+h4 { margin: 12px 0 6px 0; padding 0 }
+p {  margin: 6px 0 0 0; padding 0 0 6px 0 }
+pre { font-size: 110% }
+</style>
+</head>
+<body>
+
+<h1>Tests: Arithmetic Coding and PPM</h1>
+
+<h2>Run Date</h2>
+
+<p>
+9 February 2011
+</p>
+
+
+<h2>Machine</h2>
+
+<p>
+Lenovo Thinkpad W510 Notebook. 
+<BR>
+Processor: Intel Core i7 Q720 (1.6 GHz)
+<BR>
+Memory: 8GB
+</p>
+
+
+<h2>Java Compiler</h2>
+
+<pre>
+% javac -version
+javac 1.6.0_18
+</pre>
+
+
+<h2>Java Runtime</h2>
+
+<pre>
+% java -version
+java version "1.6.0_18"
+Java(TM) SE Runtime Environment (build 1.6.0_18-b07)
+Java HotSpot(TM) 64-Bit Server VM (build 16.0-b13, mixed mode)
+</pre>
+
+
+<h2>Results</h2>
+
+<pre>
+% ant calgary
+
+FILE=corpora\calgary\bib #bytes=111261
+        UniformModel  enc=  21.0 MB/s   dec=  20.6 MB/s   comp= 8.006 b/B
+AdaptiveUnigramModel  enc=  26.5 MB/s   dec=  14.1 MB/s   comp= 5.221 b/B
+         PPMModel(0)  enc=   6.5 MB/s   dec=   4.6 MB/s   comp= 5.221 b/B
+         PPMModel(1)  enc=  15.7 MB/s   dec=  15.2 MB/s   comp= 3.478 b/B
+         PPMModel(2)  enc=  21.8 MB/s   dec=  15.9 MB/s   comp= 2.702 b/B
+         PPMModel(3)  enc=  13.9 MB/s   dec=  12.9 MB/s   comp= 2.180 b/B
+         PPMModel(4)  enc=  12.8 MB/s   dec=  10.8 MB/s   comp= 2.011 b/B
+         PPMModel(5)  enc=  11.1 MB/s   dec=   9.6 MB/s   comp= 1.966 b/B
+         PPMModel(6)  enc=   9.9 MB/s   dec=   8.1 MB/s   comp= 1.953 b/B
+         PPMModel(7)  enc=   9.6 MB/s   dec=   8.1 MB/s   comp= 1.953 b/B
+         PPMModel(8)  enc=   8.9 MB/s   dec=   7.0 MB/s   comp= 1.951 b/B
+        PPMModel(10)  enc=   8.0 MB/s   dec=   5.7 MB/s   comp= 1.947 b/B
+        PPMModel(12)  enc=   7.4 MB/s   dec=   3.7 MB/s   comp= 1.945 b/B
+        PPMModel(14)  enc=   6.6 MB/s   dec=   2.6 MB/s   comp= 1.945 b/B
+        PPMModel(16)  enc=   6.4 MB/s   dec=   4.0 MB/s   comp= 1.939 b/B
+
+FILE=corpora\calgary\book1 #bytes=768771
+        UniformModel  enc=  78.4 MB/s   dec=  53.0 MB/s   comp= 8.006 b/B
+AdaptiveUnigramModel  enc=  45.0 MB/s   dec=  33.7 MB/s   comp= 4.533 b/B
+         PPMModel(0)  enc=  12.4 MB/s   dec=   5.0 MB/s   comp= 4.534 b/B
+         PPMModel(1)  enc=  22.9 MB/s   dec=  14.2 MB/s   comp= 3.618 b/B
+         PPMModel(2)  enc=  16.4 MB/s   dec=  12.0 MB/s   comp= 2.948 b/B
+         PPMModel(3)  enc=  12.6 MB/s   dec=  10.6 MB/s   comp= 2.509 b/B
+         PPMModel(4)  enc=   9.6 MB/s   dec=   8.6 MB/s   comp= 2.356 b/B
+         PPMModel(5)  enc=   7.8 MB/s   dec=   6.6 MB/s   comp= 2.342 b/B
+         PPMModel(6)  enc=   6.5 MB/s   dec=   6.0 MB/s   comp= 2.361 b/B
+         PPMModel(7)  enc=   5.7 MB/s   dec=   5.3 MB/s   comp= 2.382 b/B
+         PPMModel(8)  enc=   5.1 MB/s   dec=   3.7 MB/s   comp= 2.401 b/B
+        PPMModel(10)  enc=   4.5 MB/s   dec=   4.0 MB/s   comp= 2.414 b/B
+        PPMModel(12)  enc=   3.7 MB/s   dec=   2.7 MB/s   comp= 2.418 b/B
+        PPMModel(14)  enc=   3.5 MB/s   dec=   2.2 MB/s   comp= 2.420 b/B
+        PPMModel(16)  enc=   2.4 MB/s   dec=   3.4 MB/s   comp= 2.417 b/B
+
+FILE=corpora\calgary\book2 #bytes=610856
+        UniformModel  enc=  76.4 MB/s   dec=  51.8 MB/s   comp= 8.006 b/B
+AdaptiveUnigramModel  enc=  46.6 MB/s   dec=  33.9 MB/s   comp= 4.783 b/B
+         PPMModel(0)  enc=  12.3 MB/s   dec=   5.1 MB/s   comp= 4.782 b/B
+         PPMModel(1)  enc=  20.6 MB/s   dec=  12.5 MB/s   comp= 3.788 b/B
+         PPMModel(2)  enc=  17.4 MB/s   dec=  12.9 MB/s   comp= 2.922 b/B
+         PPMModel(3)  enc=  14.2 MB/s   dec=  11.6 MB/s   comp= 2.330 b/B
+         PPMModel(4)  enc=  11.4 MB/s   dec=  10.0 MB/s   comp= 2.103 b/B
+         PPMModel(5)  enc=   6.2 MB/s   dec=   8.1 MB/s   comp= 2.047 b/B
+         PPMModel(6)  enc=   8.1 MB/s   dec=   7.4 MB/s   comp= 2.035 b/B
+         PPMModel(7)  enc=   7.3 MB/s   dec=   6.6 MB/s   comp= 2.035 b/B
+         PPMModel(8)  enc=   6.7 MB/s   dec=   5.6 MB/s   comp= 2.037 b/B
+        PPMModel(10)  enc=   5.9 MB/s   dec=   4.8 MB/s   comp= 2.041 b/B
+        PPMModel(12)  enc=   5.4 MB/s   dec=   4.3 MB/s   comp= 2.043 b/B
+        PPMModel(14)  enc=   5.1 MB/s   dec=   4.1 MB/s   comp= 2.042 b/B
+        PPMModel(16)  enc=   4.5 MB/s   dec=   3.7 MB/s   comp= 2.043 b/B
+
+FILE=corpora\calgary\geo #bytes=102400
+        UniformModel  enc=  73.1 MB/s   dec=  53.9 MB/s   comp= 8.006 b/B
+AdaptiveUnigramModel  enc=  41.0 MB/s   dec=  27.7 MB/s   comp= 5.659 b/B
+         PPMModel(0)  enc=  12.5 MB/s   dec=   5.1 MB/s   comp= 5.658 b/B
+         PPMModel(1)  enc=   6.2 MB/s   dec=   3.3 MB/s   comp= 4.673 b/B
+         PPMModel(2)  enc=   4.8 MB/s   dec=   2.9 MB/s   comp= 4.591 b/B
+         PPMModel(3)  enc=   3.1 MB/s   dec=   2.2 MB/s   comp= 4.693 b/B
+         PPMModel(4)  enc=   2.7 MB/s   dec=   1.9 MB/s   comp= 4.747 b/B
+         PPMModel(5)  enc=   2.5 MB/s   dec=   1.7 MB/s   comp= 4.748 b/B
+         PPMModel(6)  enc=   2.3 MB/s   dec=   1.8 MB/s   comp= 4.746 b/B
+         PPMModel(7)  enc=   2.2 MB/s   dec=   1.7 MB/s   comp= 4.746 b/B
+         PPMModel(8)  enc=   2.2 MB/s   dec=   1.0 MB/s   comp= 4.742 b/B
+        PPMModel(10)  enc=   2.0 MB/s   dec=   1.5 MB/s   comp= 4.734 b/B
+        PPMModel(12)  enc=   1.9 MB/s   dec=   1.5 MB/s   comp= 4.731 b/B
+        PPMModel(14)  enc=   1.7 MB/s   dec=   1.2 MB/s   comp= 4.738 b/B
+        PPMModel(16)  enc=   1.7 MB/s   dec=   1.3 MB/s   comp= 4.737 b/B
+
+FILE=corpora\calgary\news #bytes=377109
+        UniformModel  enc=  78.6 MB/s   dec=  51.7 MB/s   comp= 8.006 b/B
+AdaptiveUnigramModel  enc=  44.9 MB/s   dec=  32.5 MB/s   comp= 5.191 b/B
+         PPMModel(0)  enc=  12.3 MB/s   dec=   5.0 MB/s   comp= 5.190 b/B
+         PPMModel(1)  enc=  15.8 MB/s   dec=   9.7 MB/s   comp= 4.161 b/B
+         PPMModel(2)  enc=  13.4 MB/s   dec=   9.3 MB/s   comp= 3.303 b/B
+         PPMModel(3)  enc=  11.2 MB/s   dec=   8.9 MB/s   comp= 2.721 b/B
+         PPMModel(4)  enc=   9.3 MB/s   dec=   7.9 MB/s   comp= 2.509 b/B
+         PPMModel(5)  enc=   7.7 MB/s   dec=   6.7 MB/s   comp= 2.459 b/B
+         PPMModel(6)  enc=   7.0 MB/s   dec=   5.6 MB/s   comp= 2.450 b/B
+         PPMModel(7)  enc=   6.4 MB/s   dec=   5.6 MB/s   comp= 2.448 b/B
+         PPMModel(8)  enc=   6.0 MB/s   dec=   5.3 MB/s   comp= 2.448 b/B
+        PPMModel(10)  enc=   5.0 MB/s   dec=   4.8 MB/s   comp= 2.443 b/B
+        PPMModel(12)  enc=   5.1 MB/s   dec=   4.0 MB/s   comp= 2.441 b/B
+        PPMModel(14)  enc=   4.9 MB/s   dec=   4.4 MB/s   comp= 2.440 b/B
+        PPMModel(16)  enc=   4.5 MB/s   dec=   3.4 MB/s   comp= 2.441 b/B
+
+FILE=corpora\calgary\obj1 #bytes=21504
+        UniformModel  enc=  71.7 MB/s   dec=  53.8 MB/s   comp= 8.006 b/B
+AdaptiveUnigramModel  enc=  43.0 MB/s   dec=  30.7 MB/s   comp= 5.997 b/B
+         PPMModel(0)  enc=  12.6 MB/s   dec=   4.9 MB/s   comp= 5.997 b/B
+         PPMModel(1)  enc=  11.9 MB/s   dec=   6.1 MB/s   comp= 4.491 b/B
+         PPMModel(2)  enc=  10.2 MB/s   dec=   5.8 MB/s   comp= 4.011 b/B
+         PPMModel(3)  enc=   9.0 MB/s   dec=   5.4 MB/s   comp= 3.892 b/B
+         PPMModel(4)  enc=   8.0 MB/s   dec=   5.2 MB/s   comp= 3.869 b/B
+         PPMModel(5)  enc=   8.0 MB/s   dec=   4.7 MB/s   comp= 3.866 b/B
+         PPMModel(6)  enc=   6.9 MB/s   dec=   4.2 MB/s   comp= 3.868 b/B
+         PPMModel(7)  enc=   7.4 MB/s   dec=   4.7 MB/s   comp= 3.870 b/B
+         PPMModel(8)  enc=   6.9 MB/s   dec=   4.7 MB/s   comp= 3.875 b/B
+        PPMModel(10)  enc=   6.5 MB/s   dec=   4.4 MB/s   comp= 3.884 b/B
+        PPMModel(12)  enc=   6.3 MB/s   dec=   4.3 MB/s   comp= 3.895 b/B
+        PPMModel(14)  enc=   5.7 MB/s   dec=   3.8 MB/s   comp= 3.900 b/B
+        PPMModel(16)  enc=   5.8 MB/s   dec=   4.0 MB/s   comp= 3.907 b/B
+
+FILE=corpora\calgary\obj2 #bytes=246814
+        UniformModel  enc=  72.6 MB/s   dec=  53.7 MB/s   comp= 8.006 b/B
+AdaptiveUnigramModel  enc=  44.9 MB/s   dec=  31.6 MB/s   comp= 6.213 b/B
+         PPMModel(0)  enc=  11.6 MB/s   dec=   4.8 MB/s   comp= 6.178 b/B
+         PPMModel(1)  enc=   8.0 MB/s   dec=   4.5 MB/s   comp= 4.110 b/B
+         PPMModel(2)  enc=  11.1 MB/s   dec=   7.2 MB/s   comp= 3.158 b/B
+         PPMModel(3)  enc=  10.1 MB/s   dec=   7.1 MB/s   comp= 2.815 b/B
+         PPMModel(4)  enc=   8.3 MB/s   dec=   6.4 MB/s   comp= 2.612 b/B
+         PPMModel(5)  enc=   7.7 MB/s   dec=   6.1 MB/s   comp= 2.545 b/B
+         PPMModel(6)  enc=   7.5 MB/s   dec=   5.8 MB/s   comp= 2.518 b/B
+         PPMModel(7)  enc=   3.8 MB/s   dec=   5.4 MB/s   comp= 2.498 b/B
+         PPMModel(8)  enc=   6.5 MB/s   dec=   5.2 MB/s   comp= 2.474 b/B
+        PPMModel(10)  enc=   6.2 MB/s   dec=   4.9 MB/s   comp= 2.465 b/B
+        PPMModel(12)  enc=   5.8 MB/s   dec=   4.0 MB/s   comp= 2.457 b/B
+        PPMModel(14)  enc=   5.3 MB/s   dec=   4.4 MB/s   comp= 2.457 b/B
+        PPMModel(16)  enc=   4.6 MB/s   dec=   4.3 MB/s   comp= 2.460 b/B
+
+FILE=corpora\calgary\paper1 #bytes=53161
+        UniformModel  enc=  66.5 MB/s   dec=  53.2 MB/s   comp= 8.006 b/B
+AdaptiveUnigramModel  enc=  44.3 MB/s   dec=  33.2 MB/s   comp= 5.019 b/B
+         PPMModel(0)  enc=  12.4 MB/s   dec=   4.7 MB/s   comp= 5.019 b/B
+         PPMModel(1)  enc=  24.2 MB/s   dec=  15.2 MB/s   comp= 3.841 b/B
+         PPMModel(2)  enc=  23.1 MB/s   dec=  15.6 MB/s   comp= 2.973 b/B
+         PPMModel(3)  enc=  16.1 MB/s   dec=  13.0 MB/s   comp= 2.555 b/B
+         PPMModel(4)  enc=  13.0 MB/s   dec=  10.6 MB/s   comp= 2.429 b/B
+         PPMModel(5)  enc=  11.6 MB/s   dec=   9.8 MB/s   comp= 2.407 b/B
+         PPMModel(6)  enc=  10.8 MB/s   dec=   8.9 MB/s   comp= 2.403 b/B
+         PPMModel(7)  enc=   9.8 MB/s   dec=   8.4 MB/s   comp= 2.399 b/B
+         PPMModel(8)  enc=   9.5 MB/s   dec=   8.1 MB/s   comp= 2.396 b/B
+        PPMModel(10)  enc=   8.7 MB/s   dec=   7.2 MB/s   comp= 2.395 b/B
+        PPMModel(12)  enc=   8.1 MB/s   dec=   6.8 MB/s   comp= 2.393 b/B
+        PPMModel(14)  enc=   6.2 MB/s   dec=   6.5 MB/s   comp= 2.391 b/B
+        PPMModel(16)  enc=   7.2 MB/s   dec=   6.0 MB/s   comp= 2.391 b/B
+
+FILE=corpora\calgary\paper2 #bytes=82199
+        UniformModel  enc=  74.7 MB/s   dec=  54.8 MB/s   comp= 8.006 b/B
+AdaptiveUnigramModel  enc=  45.7 MB/s   dec=  35.7 MB/s   comp= 4.624 b/B
+         PPMModel(0)  enc=  12.6 MB/s   dec=   5.1 MB/s   comp= 4.625 b/B
+         PPMModel(1)  enc=  25.7 MB/s   dec=  15.8 MB/s   comp= 3.644 b/B
+         PPMModel(2)  enc=  23.5 MB/s   dec=  16.8 MB/s   comp= 2.922 b/B
+         PPMModel(3)  enc=  15.2 MB/s   dec=  12.1 MB/s   comp= 2.509 b/B
+         PPMModel(4)  enc=  12.6 MB/s   dec=  10.7 MB/s   comp= 2.388 b/B
+         PPMModel(5)  enc=  10.8 MB/s   dec=   9.7 MB/s   comp= 2.368 b/B
+         PPMModel(6)  enc=   8.7 MB/s   dec=   8.5 MB/s   comp= 2.375 b/B
+         PPMModel(7)  enc=   8.8 MB/s   dec=   7.8 MB/s   comp= 2.383 b/B
+         PPMModel(8)  enc=   8.4 MB/s   dec=   6.9 MB/s   comp= 2.386 b/B
+        PPMModel(10)  enc=   7.7 MB/s   dec=   6.1 MB/s   comp= 2.384 b/B
+        PPMModel(12)  enc=   6.8 MB/s   dec=   6.4 MB/s   comp= 2.381 b/B
+        PPMModel(14)  enc=   5.9 MB/s   dec=   5.7 MB/s   comp= 2.384 b/B
+        PPMModel(16)  enc=   6.3 MB/s   dec=   5.7 MB/s   comp= 2.383 b/B
+
+FILE=corpora\calgary\paper3 #bytes=46526
+        UniformModel  enc=  77.5 MB/s   dec=  51.7 MB/s   comp= 8.006 b/B
+AdaptiveUnigramModel  enc=  42.3 MB/s   dec=  33.2 MB/s   comp= 4.707 b/B
+         PPMModel(0)  enc=  12.2 MB/s   dec=   5.0 MB/s   comp= 4.707 b/B
+         PPMModel(1)  enc=  25.8 MB/s   dec=  15.5 MB/s   comp= 3.738 b/B
+         PPMModel(2)  enc=  22.2 MB/s   dec=  15.5 MB/s   comp= 3.147 b/B
+         PPMModel(3)  enc=  15.5 MB/s   dec=  11.9 MB/s   comp= 2.758 b/B
+         PPMModel(4)  enc=  12.2 MB/s   dec=   8.6 MB/s   comp= 2.655 b/B
+         PPMModel(5)  enc=  11.3 MB/s   dec=   8.6 MB/s   comp= 2.645 b/B
+         PPMModel(6)  enc=   9.3 MB/s   dec=   8.5 MB/s   comp= 2.652 b/B
+         PPMModel(7)  enc=   8.3 MB/s   dec=   7.5 MB/s   comp= 2.656 b/B
+         PPMModel(8)  enc=   8.8 MB/s   dec=   7.4 MB/s   comp= 2.657 b/B
+        PPMModel(10)  enc=   8.3 MB/s   dec=   6.3 MB/s   comp= 2.655 b/B
+        PPMModel(12)  enc=   7.4 MB/s   dec=   6.6 MB/s   comp= 2.650 b/B
+        PPMModel(14)  enc=   7.4 MB/s   dec=   6.4 MB/s   comp= 2.651 b/B
+        PPMModel(16)  enc=   5.7 MB/s   dec=   5.5 MB/s   comp= 2.651 b/B
+
+FILE=corpora\calgary\paper4 #bytes=13286
+        UniformModel  enc=  66.4 MB/s   dec=  66.4 MB/s   comp= 8.007 b/B
+AdaptiveUnigramModel  enc=  44.3 MB/s   dec=  33.2 MB/s   comp= 4.816 b/B
+         PPMModel(0)  enc=  12.1 MB/s   dec=   5.1 MB/s   comp= 4.816 b/B
+         PPMModel(1)  enc=  33.2 MB/s   dec=  14.8 MB/s   comp= 3.886 b/B
+         PPMModel(2)  enc=  22.1 MB/s   dec=  14.8 MB/s   comp= 3.300 b/B
+         PPMModel(3)  enc=  16.6 MB/s   dec=  12.1 MB/s   comp= 3.007 b/B
+         PPMModel(4)  enc=  13.3 MB/s   dec=  10.2 MB/s   comp= 2.981 b/B
+         PPMModel(5)  enc=  13.3 MB/s   dec=   9.5 MB/s   comp= 2.976 b/B
+         PPMModel(6)  enc=  12.1 MB/s   dec=   8.9 MB/s   comp= 2.982 b/B
+         PPMModel(7)  enc=  10.2 MB/s   dec=   8.3 MB/s   comp= 2.983 b/B
+         PPMModel(8)  enc=  10.2 MB/s   dec=   8.3 MB/s   comp= 2.982 b/B
+        PPMModel(10)  enc=  10.2 MB/s   dec=   7.8 MB/s   comp= 2.979 b/B
+        PPMModel(12)  enc=   9.5 MB/s   dec=   7.8 MB/s   comp= 2.975 b/B
+        PPMModel(14)  enc=   8.9 MB/s   dec=   7.0 MB/s   comp= 2.975 b/B
+        PPMModel(16)  enc=   8.3 MB/s   dec=   7.0 MB/s   comp= 2.979 b/B
+
+FILE=corpora\calgary\paper5 #bytes=11954
+        UniformModel  enc= 119.5 MB/s   dec=  39.8 MB/s   comp= 8.007 b/B
+AdaptiveUnigramModel  enc=  59.8 MB/s   dec=  29.9 MB/s   comp= 5.059 b/B
+         PPMModel(0)  enc=  12.0 MB/s   dec=   5.2 MB/s   comp= 5.059 b/B
+         PPMModel(1)  enc=  23.9 MB/s   dec=  13.3 MB/s   comp= 4.039 b/B
+         PPMModel(2)  enc=  23.9 MB/s   dec=  13.3 MB/s   comp= 3.381 b/B
+         PPMModel(3)  enc=  17.1 MB/s   dec=  10.9 MB/s   comp= 3.123 b/B
+         PPMModel(4)  enc=  13.3 MB/s   dec=  10.0 MB/s   comp= 3.082 b/B
+         PPMModel(5)  enc=  12.0 MB/s   dec=   8.5 MB/s   comp= 3.070 b/B
+         PPMModel(6)  enc=  12.0 MB/s   dec=   8.5 MB/s   comp= 3.066 b/B
+         PPMModel(7)  enc=  10.9 MB/s   dec=   8.0 MB/s   comp= 3.073 b/B
+         PPMModel(8)  enc=  10.9 MB/s   dec=   8.0 MB/s   comp= 3.062 b/B
+        PPMModel(10)  enc=   9.2 MB/s   dec=   7.5 MB/s   comp= 3.071 b/B
+        PPMModel(12)  enc=   9.2 MB/s   dec=   7.0 MB/s   comp= 3.072 b/B
+        PPMModel(14)  enc=   8.5 MB/s   dec=   7.0 MB/s   comp= 3.076 b/B
+        PPMModel(16)  enc=   8.5 MB/s   dec=   5.7 MB/s   comp= 3.081 b/B
+
+FILE=corpora\calgary\paper6 #bytes=38105
+        UniformModel  enc=  76.2 MB/s   dec=  54.4 MB/s   comp= 8.006 b/B
+AdaptiveUnigramModel  enc=  42.3 MB/s   dec=  34.6 MB/s   comp= 5.057 b/B
+         PPMModel(0)  enc=  12.7 MB/s   dec=   5.1 MB/s   comp= 5.057 b/B
+         PPMModel(1)  enc=  23.8 MB/s   dec=  15.2 MB/s   comp= 3.853 b/B
+         PPMModel(2)  enc=  22.4 MB/s   dec=  15.2 MB/s   comp= 3.017 b/B
+         PPMModel(3)  enc=  15.9 MB/s   dec=  12.3 MB/s   comp= 2.613 b/B
+         PPMModel(4)  enc=  10.3 MB/s   dec=   9.5 MB/s   comp= 2.521 b/B
+         PPMModel(5)  enc=  11.9 MB/s   dec=   9.3 MB/s   comp= 2.507 b/B
+         PPMModel(6)  enc=  10.9 MB/s   dec=   8.7 MB/s   comp= 2.495 b/B
+         PPMModel(7)  enc=  10.0 MB/s   dec=   8.3 MB/s   comp= 2.494 b/B
+         PPMModel(8)  enc=   9.5 MB/s   dec=   7.9 MB/s   comp= 2.489 b/B
+        PPMModel(10)  enc=   8.9 MB/s   dec=   7.3 MB/s   comp= 2.488 b/B
+        PPMModel(12)  enc=   8.1 MB/s   dec=   6.8 MB/s   comp= 2.489 b/B
+        PPMModel(14)  enc=   7.8 MB/s   dec=   4.8 MB/s   comp= 2.493 b/B
+        PPMModel(16)  enc=   7.6 MB/s   dec=   6.4 MB/s   comp= 2.498 b/B
+
+FILE=corpora\calgary\pic #bytes=513216
+        UniformModel  enc= 114.0 MB/s   dec=  80.2 MB/s   comp= 8.006 b/B
+AdaptiveUnigramModel  enc=  53.5 MB/s   dec=  42.1 MB/s   comp= 1.195 b/B
+         PPMModel(0)  enc=  13.9 MB/s   dec=   6.1 MB/s   comp= 1.167 b/B
+         PPMModel(1)  enc=  45.8 MB/s   dec=  27.4 MB/s   comp= 0.853 b/B
+         PPMModel(2)  enc=  36.9 MB/s   dec=  24.9 MB/s   comp= 0.820 b/B
+         PPMModel(3)  enc=  28.5 MB/s   dec=  21.7 MB/s   comp= 0.813 b/B
+         PPMModel(4)  enc=  24.0 MB/s   dec=  19.1 MB/s   comp= 0.813 b/B
+         PPMModel(5)  enc=  22.9 MB/s   dec=  18.0 MB/s   comp= 0.804 b/B
+         PPMModel(6)  enc=  20.2 MB/s   dec=  16.4 MB/s   comp= 0.802 b/B
+         PPMModel(7)  enc=  18.2 MB/s   dec=  15.0 MB/s   comp= 0.805 b/B
+         PPMModel(8)  enc=  17.7 MB/s   dec=  14.6 MB/s   comp= 0.801 b/B
+        PPMModel(10)  enc=  14.3 MB/s   dec=  12.4 MB/s   comp= 0.800 b/B
+        PPMModel(12)  enc=  13.7 MB/s   dec=  11.7 MB/s   comp= 0.804 b/B
+        PPMModel(14)  enc=  12.7 MB/s   dec=  11.0 MB/s   comp= 0.807 b/B
+        PPMModel(16)  enc=  11.5 MB/s   dec=   9.6 MB/s   comp= 0.810 b/B
+
+FILE=corpora\calgary\progc #bytes=39611
+        UniformModel  enc=  79.2 MB/s   dec=  56.6 MB/s   comp= 8.006 b/B
+AdaptiveUnigramModel  enc=  44.0 MB/s   dec=  33.0 MB/s   comp= 5.244 b/B
+         PPMModel(0)  enc=  12.4 MB/s   dec=   5.3 MB/s   comp= 5.244 b/B
+         PPMModel(1)  enc=  22.0 MB/s   dec=  13.2 MB/s   comp= 3.875 b/B
+         PPMModel(2)  enc=  20.8 MB/s   dec=  14.1 MB/s   comp= 2.961 b/B
+         PPMModel(3)  enc=  15.8 MB/s   dec=  11.3 MB/s   comp= 2.589 b/B
+         PPMModel(4)  enc=  13.2 MB/s   dec=  10.2 MB/s   comp= 2.488 b/B
+         PPMModel(5)  enc=  11.7 MB/s   dec=   9.2 MB/s   comp= 2.466 b/B
+         PPMModel(6)  enc=   9.4 MB/s   dec=   8.6 MB/s   comp= 2.446 b/B
+         PPMModel(7)  enc=  10.2 MB/s   dec=   8.3 MB/s   comp= 2.442 b/B
+         PPMModel(8)  enc=   9.9 MB/s   dec=   8.1 MB/s   comp= 2.440 b/B
+        PPMModel(10)  enc=   9.2 MB/s   dec=   7.6 MB/s   comp= 2.429 b/B
+        PPMModel(12)  enc=   8.4 MB/s   dec=   6.5 MB/s   comp= 2.433 b/B
+        PPMModel(14)  enc=   7.8 MB/s   dec=   6.5 MB/s   comp= 2.427 b/B
+        PPMModel(16)  enc=   6.9 MB/s   dec=   6.5 MB/s   comp= 2.428 b/B
+
+FILE=corpora\calgary\progl #bytes=71646
+        UniformModel  enc=  79.6 MB/s   dec=  55.1 MB/s   comp= 8.006 b/B
+AdaptiveUnigramModel  enc=  44.8 MB/s   dec=  35.8 MB/s   comp= 4.798 b/B
+         PPMModel(0)  enc=  12.8 MB/s   dec=   5.3 MB/s   comp= 4.794 b/B
+         PPMModel(1)  enc=  28.7 MB/s   dec=  16.7 MB/s   comp= 3.337 b/B
+         PPMModel(2)  enc=  26.5 MB/s   dec=  18.9 MB/s   comp= 2.445 b/B
+         PPMModel(3)  enc=  20.5 MB/s   dec=  15.9 MB/s   comp= 1.989 b/B
+         PPMModel(4)  enc=  16.3 MB/s   dec=  13.5 MB/s   comp= 1.856 b/B
+         PPMModel(5)  enc=  14.6 MB/s   dec=  12.6 MB/s   comp= 1.799 b/B
+         PPMModel(6)  enc=  13.5 MB/s   dec=  11.2 MB/s   comp= 1.763 b/B
+         PPMModel(7)  enc=  12.4 MB/s   dec=  10.4 MB/s   comp= 1.740 b/B
+         PPMModel(8)  enc=  11.7 MB/s   dec=  10.2 MB/s   comp= 1.717 b/B
+        PPMModel(10)  enc=  10.9 MB/s   dec=   9.4 MB/s   comp= 1.703 b/B
+        PPMModel(12)  enc=  10.1 MB/s   dec=   7.0 MB/s   comp= 1.696 b/B
+        PPMModel(14)  enc=   9.4 MB/s   dec=   8.3 MB/s   comp= 1.694 b/B
+        PPMModel(16)  enc=   8.7 MB/s   dec=   7.9 MB/s   comp= 1.692 b/B
+
+FILE=corpora\calgary\progp #bytes=49379
+        UniformModel  enc=  70.5 MB/s   dec=  54.9 MB/s   comp= 8.006 b/B
+AdaptiveUnigramModel  enc=  44.9 MB/s   dec=  30.9 MB/s   comp= 4.908 b/B
+         PPMModel(0)  enc=  12.7 MB/s   dec=   5.2 MB/s   comp= 4.904 b/B
+         PPMModel(1)  enc=  23.5 MB/s   dec=  14.5 MB/s   comp= 3.386 b/B
+         PPMModel(2)  enc=  26.0 MB/s   dec=  17.0 MB/s   comp= 2.343 b/B
+         PPMModel(3)  enc=  19.8 MB/s   dec=  15.0 MB/s   comp= 1.919 b/B
+         PPMModel(4)  enc=  15.9 MB/s   dec=  13.0 MB/s   comp= 1.828 b/B
+         PPMModel(5)  enc=  14.5 MB/s   dec=  11.8 MB/s   comp= 1.785 b/B
+         PPMModel(6)  enc=  13.3 MB/s   dec=  11.2 MB/s   comp= 1.760 b/B
+         PPMModel(7)  enc=  12.3 MB/s   dec=   9.3 MB/s   comp= 1.742 b/B
+         PPMModel(8)  enc=   9.9 MB/s   dec=   9.9 MB/s   comp= 1.727 b/B
+        PPMModel(10)  enc=  11.0 MB/s   dec=   9.3 MB/s   comp= 1.703 b/B
+        PPMModel(12)  enc=  10.3 MB/s   dec=   8.8 MB/s   comp= 1.686 b/B
+        PPMModel(14)  enc=   9.5 MB/s   dec=   8.1 MB/s   comp= 1.676 b/B
+        PPMModel(16)  enc=   9.0 MB/s   dec=   7.8 MB/s   comp= 1.673 b/B
+
+FILE=corpora\calgary\trans #bytes=93695
+        UniformModel  enc=  66.9 MB/s   dec=  42.6 MB/s   comp= 8.006 b/B
+AdaptiveUnigramModel  enc=  36.0 MB/s   dec=  32.3 MB/s   comp= 5.542 b/B
+         PPMModel(0)  enc=  12.7 MB/s   dec=   5.3 MB/s   comp= 5.544 b/B
+         PPMModel(1)  enc=  24.7 MB/s   dec=  14.6 MB/s   comp= 3.513 b/B
+         PPMModel(2)  enc=  24.0 MB/s   dec=  17.4 MB/s   comp= 2.423 b/B
+         PPMModel(3)  enc=  18.7 MB/s   dec=  15.4 MB/s   comp= 1.853 b/B
+         PPMModel(4)  enc=  16.2 MB/s   dec=  13.0 MB/s   comp= 1.666 b/B
+         PPMModel(5)  enc=  14.4 MB/s   dec=  12.0 MB/s   comp= 1.596 b/B
+         PPMModel(6)  enc=  13.0 MB/s   dec=  11.0 MB/s   comp= 1.555 b/B
+         PPMModel(7)  enc=  12.2 MB/s   dec=  10.6 MB/s   comp= 1.531 b/B
+         PPMModel(8)  enc=  11.7 MB/s   dec=  10.1 MB/s   comp= 1.513 b/B
+        PPMModel(10)  enc=   9.5 MB/s   dec=   9.3 MB/s   comp= 1.498 b/B
+        PPMModel(12)  enc=  10.0 MB/s   dec=   8.9 MB/s   comp= 1.488 b/B
+        PPMModel(14)  enc=   9.2 MB/s   dec=   8.1 MB/s   comp= 1.484 b/B
+        PPMModel(16)  enc=   8.2 MB/s   dec=   7.7 MB/s   comp= 1.482 b/B
+
+BUILD SUCCESSFUL
+Total time: 2 minutes 12 seconds
+</pre>
+</body>
+</html>

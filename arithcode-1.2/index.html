@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>Arithmetic Coding and PPM in Java</title>
+<meta http-equiv="Content-type"
+      content="application/xhtml+xml; charset=iso-8859-1"/>
+<meta http-equiv="Content-Language"
+      content="en"/>
+<style>
+* { font-family: arial; }
+body {  width: 45em; padding: 0 1em 1em 1em; font-size: 90% }
+code { font-family: courier }
+h1 {  font-size: 140%; font-style: bold }
+h2 {  font-size: 115%; margin: 18px 0 6px 0 }
+h3 {  font-size: 100%; margin: 12px 0 6px 0; padding: 0 }
+h4 { margin: 12px 0 6px 0; padding 0 }
+p {  margin: 6px 0 0 0; padding 0 0 6px 0 }
+</style>
+</head>
+<body>
+
+<h1>Arithmetic Coding and PPM Compression in Java</h1>
+
+<h2>Overview</h2>
+
+<p> The arithmetic coding package is an open-soruce implementation of
+a generic arithemtic coder and decoder, along with byte stream models
+that are subclasses of Java's I/O streams.  The implementation of
+arithmetic coding is based on:</p>
+
+<ul>
+<li>Witten, I. H., R. Neal, and J. G. Cleary. 1987. Arithmetic coding for
+data compression. <i>Communications of the ACM</i> <b>30</b>(6): 520-540.
+</li>
+</ul>
+
+<p>Example statistical models
+include a uniform distribution, simple unigram model, and a parametric
+prediction by partial matching (PPM) model.  The PPM model is based
+on:</p>
+
+<ul>
+<li>Cleary, J.G. and I.H. Witten. 1984. Data compression using
+adaptive coding and partial string matching. <i>IEEE Transactions on
+Communications.</i> <b>32</b>(4):396-402.  
+</li>
+</ul>
+
+<p>Models other than PPM may be integrated for compression.</p>
+
+
+
+<h2>Download</h2>
+
+<p><b>License:</b> The arithcode package is licensed under the standard <a
+href="license.txt">Apache 2.0 license</a>.  </p>
+
+<p>You only need the jar to run the arithcode package, but you need
+the source distribution to build and test it.</p>
+
+<ul>
+  <li>Java Archive (Jar): <a href="arithcode-1.2.jar">arithcode-1.2.jar</a></li>
+  <li>Tar/Gzipped Source: <a href="arithcode-1.2.tgz">arithcode-1.2.tgz</a>
+</ul>
+
+<p>The source distribution includes <a href="http://www.junit.org">JUnit</a>,
+which is required for testing, but not for building the jar or using
+the jar.</p>
+
+<p>The distribution also includes Witten and Bell's <a
+href="http://en.wikipedia.org/wiki/Calgary_Corpus">Calgary corpus</a>,
+which includes a range of different kinds of byte data for testing
+compression algorithms.</p>
+
+
+
+<h2>Getting Started</h2>
+
+<p>The package has an <a href="http://ant.apache.org/">Apache Ant</a>
+build file which has targets to build the jar, test, and document the
+package. So just download the source, unpack it and run any of the
+following ant targets: </p>
+
+<ul>
+<li>clean: cleans the distribution</li>
+<li>compile: compile the java source</li>
+<li>jar: build the jar file in /arithcode-1.2.jar</li>
+<li>javadoc: generate the javadoc in /build/doc/api/</li>
+<li>test-compile: compiles the tests (requires JUnit)</li>
+<li>test: run the unit tests (requires JUnit)</li>
+<li>calgary: run various PPM compressors on the Calgary corpus</li>
+<li>ppm: compress a file using PPM</li>
+<li>unppm: uncompress a file using PPM</li>
+<li>web: build the web site</li>
+</ul>
+
+
+<h2>Understanding Arithmetic Coding and PPM</h2>
+
+<p>The original papers cited in the introduction are
+quite readable.  I've also provided a tutorial with
+further references.</p>
+
+<ul>
+<li><a href="doc/tutorial.html">Quick Intro to Arithmetic Coding and PPM</a>
+</ul>
+
+
+<h2>PPM Compression Rates and Speed</h2>
+
+<p>Here are results for the Calgary corpus for speed
+and compression for various lengths of PPM.</p>
+
+
+<ul>
+<li><a href="results/results-09-02-2011.html">Version 1.2 Results: 9 February 2011</a></li>
+</ul>
+
+<p>And just for laughs, some historical results illustrating the
+progress of compilers and processors and memory.</p>
+
+<ul>
+<li><a href="results/results-26-01-2003.html">Version 1.1 Results: 26 January 2003</a></li>
+<li><a href="results/results-06-10-2002.html">Version 1.0 Results: 6 October 2002</a></li>
+</ul>
+
+
+<h2>Acknowledgements</h2>
+
+<p>Thanks to the original authors for making their source and
+corpora available.</p>
+
+<p>
+Thanks also to Garrick Toubassi for patching a bug in version 1.1; it
+only arose in fairly extreme boundary conditions, making its diagnosis
+a very nice piece of debugging indeed.</p>
+
+
+</body>
+
+</html>
+

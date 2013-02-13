@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+
+<project name="Arithmetic Coding in Java"
+         basedir=".">
+
+<property name="project"
+          value="arithcode"/>
+<property name="version" 
+          value="1.2"/>
+<property name="jar"
+          value="${project}-${version}.jar"/>
+<property name="tgz"
+          value="${project}-${version}.tgz"/>
+
+<path id="classpath.standard">
+  <pathelement location="${jar}"/>
+</path>
+
+<path id="classpath.test">
+  <pathelement location="build/classes/test"/>
+  <pathelement location="lib/junit-4.8.2.jar"/>
+</path>
+
+<target name="clean">
+  <delete dir="build"/>
+  <delete file="${jar}"/>
+</target>
+
+<target name="compile">
+  <mkdir dir="build/classes/std"/>
+  <javac includeAntRuntime="false"   
+         optimize="on"
+         debug="yes"
+         debuglevel="source,lines,vars"
+         destdir="build/classes/std">
+    <compilerarg value="-Xlint:all"/>
+    <classpath refid="classpath.standard"/>
+    <src path="src/std"/>
+  </javac>
+</target>
+
+<target name="jar"
+        depends="compile">
+  <jar destfile="${jar}">
+    <fileset dir="build/classes/std"
+             includes="**/*.class"/>
+  </jar>
+</target>
+
+<target name="javadoc">
+    <mkdir dir="build/docs/api"/>
+    <javadoc destdir="build/docs/api"
+             author="true"
+             use="false"
+             version="true"
+             doctitle="Colloquial Arithmetic Coder ${version}"
+             windowtitle="Arithmetic Coder API ${version}">
+      <packageset dir="src/std">
+        <include name="**"/>
+      </packageset>
+      <link href="http://download.oracle.com/javase/6/docs/api/"/>
+    </javadoc>
+</target>
+
+
+<target name="test-compile"
+          depends="clean,jar">
+    <mkdir dir="build/classes/test"/>
+    <javac optimize="on"
+           debug="yes"
+           debuglevel="source,lines,vars"
+           destdir="build/classes/test"
+           includeAntRuntime="false">
+      <classpath refid="classpath.test"/>
+      <classpath refid="classpath.standard"/>
+      <src path="src/test"/>
+      <include name="**/*.java"/>
+    </javac>
+</target>
+
+<target name="test"
+        depends="test-compile">
+    <junit printsummary="withOutAndErr"
+           haltonfailure="on"
+           showoutput="off"
+           filtertrace="off"
+           fork="true">
+      <classpath refid="classpath.test"/>
+      <classpath refid="classpath.standard"/>
+      <formatter type="brief" usefile="false"/>
+      <batchtest fork="no">
+        <fileset dir="src/test">
+          <include name="**/*Test.java"/>
+        </fileset>
+      </batchtest>
+    </junit>
+</target>
+
+<target name="calgary"
+        depends="test-compile">
+  <java classname="com.colloquial.arithcode.demo.CalgaryDemo"
+        fork="true">
+    <classpath refid="classpath.standard"/>
+    <arg value="corpora/calgary"/>
+  </java>
+</target>
+
+<property name="order" value="5"/>
+<property name="file.in" value="corpora/calgary/book1"/>
+<property name="file.ppm" value="build/book1.ppm"/>
+<target name="ppm"
+        depends="jar">
+  <java classname="com.colloquial.arithcode.demo.PPMCompress"
+        fork="true">
+    <classpath refid="classpath.standard"/>
+    <arg value="${order}"/>
+    <arg value="${file.in}"/>
+    <arg value="${file.ppm}"/>
+  </java>
+</target>
+
+<property name="order" value="5"/>
+<property name="file.out" value="build/book1.copy"/>
+<target name="unppm"
+        depends="jar">
+  <java classname="com.colloquial.arithcode.demo.PPMDecompress"
+        fork="true">
+    <classpath refid="classpath.standard"/>
+    <arg value="${order}"/>
+    <arg value="${file.ppm}"/>
+    <arg value="${file.out}"/>
+  </java>
+</target>
+
+<target name="web"
+        depends="clean,jar">
+  <tar destfile="${tgz}"
+       compression="gzip">
+    <tarfileset dir="."
+                prefix="arithcode-${version}"
+                mode="775">
+      <exclude name="build/**"/>
+      <exclude name="${tgz}"/>
+    </tarfileset>
+  </tar>
+  <tar destfile="build/arithcode-${version}-web.tgz"
+       compression="gzip">
+     <tarfileset dir="."
+                 prefix=""
+                 mode="775">
+       <exclude name="build/**"/>
+     </tarfileset>
+  </tar>
+</target>
+
+</project>
